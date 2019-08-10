@@ -5,6 +5,7 @@
  */
 package co.carlosortiz.workqueue.interfaces.reportes;
 
+import co.carlosortiz.workqueue.workers.units.job.GlobalJobController;
 import co.carlosortiz.workqueue.workers.units.reportes.ReportProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,12 +22,13 @@ public class ReportQueueListener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReportQueueListener.class);
     @Autowired
-    private ReportProcessor reportProcessor;
+    //private ReportProcessor reportProcessor;
+    private GlobalJobController globalJobController;
 
     @JmsListener(destination = "${work.queue.input}",
             containerFactory = "jmsQueueListenerContainerFactory")
     public void receiveAndProcessMessage(String message) {
         LOGGER.info("message to process: [{}]", message);
-        reportProcessor.processMessage(message);
+        globalJobController.processJob(message);
     }
 }

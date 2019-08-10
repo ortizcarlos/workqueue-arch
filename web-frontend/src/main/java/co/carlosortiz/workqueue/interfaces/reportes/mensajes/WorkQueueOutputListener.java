@@ -5,6 +5,7 @@
  */
 package co.carlosortiz.workqueue.interfaces.reportes.mensajes;
 
+import co.carlosortiz.workqueue.aplicacion.servicios.JobResultCoordinator;
 import co.carlosortiz.workqueue.aplicacion.servicios.ReportResultProcessor;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,40 +15,49 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *
  * @author Carlos
  */
-//@Component
-public class ReportQueueListener {
+@Component
+public class WorkQueueOutputListener {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ReportQueueListener.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WorkQueueOutputListener.class);
 
     @Autowired
-    private ReportResultProcessor reportResultProcessor;
+    private JobResultCoordinator jobResultCoordinator;
 
     @JmsListener(destination = "${work.queue.input}",
             containerFactory = "jmsQueueListenerContainerFactory")
     public void receiveAndProcessMessage(String message) {
-        LOGGER.info("message to process: [{}]", message);
+        LOGGER.info("New Message read from ouput WorkQueue [{}]", message);
         //Recibe mensaje de procesamiento de un reporte y notifia al cliente
         //el resultado de la ejeucion.
 
         ObjectMapper mapper = new ObjectMapper();
         try {
             JsonNode root = mapper.readTree(message);
-            String reportId = root.path("reportId").asText();
-            String reportCode = root.path("reportCode").asText();
-            String reportUser = root.path("reportUser").asText();
-            String reportStatus = root.path("reportStatus").asText();
+            String jobId = root.path("jobId").asText();
+            String jobCode = root.path("jobCode").asText();
+            String user = root.path("user").asText();
+            String result = getResponse(root.path("responseMap"));
 
-            LOGGER.info("report-code: [{}]", reportCode);
-            LOGGER.info("report-id: [{}]", reportId);
-            LOGGER.info("report-user: [{}]", reportUser);
+            LOGGER.info("job-code: [{}]", jobCode);
+            LOGGER.info("job-id: [{}]", jobId);
+            LOGGER.info("job-response: [{}]", result);
             
-            this.reportResultProcessor.setWSSJobResult(reportId, reportStatus);
+            this.jobResultCoordinator.processJobCompleted (jobId, result);
         } catch (Exception e) {
             LOGGER.error("Ocurrio un error procesando resultado" , e);
         }
+    }
+
+    private String getResponse(JsonNode responseMap) {
+
+            String result = responseMap.path("result").asText();
+         return result;
     }
 }
