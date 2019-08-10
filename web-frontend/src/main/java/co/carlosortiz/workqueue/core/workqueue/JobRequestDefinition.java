@@ -9,14 +9,18 @@ import java.util.stream.Collectors;
 
 public class JobRequestDefinition {
     private int jobsQueued;
+    private String jobCode;
+    private String jobUser;
     private AtomicInteger jobsExecuted;
     private Queue<String> resultQueue;
 
 
-    public JobRequestDefinition(int jobsQueued) {
+    public JobRequestDefinition(int jobsQueued,String jobCode,String jobUser) {
         this.jobsQueued = jobsQueued;
+        this.jobCode = jobCode;
         jobsExecuted = new AtomicInteger(0);
         resultQueue = new ConcurrentLinkedQueue<>();
+        this.jobUser = jobUser;
     }
 
     public int incrementAndGetExecutions() {
@@ -25,6 +29,14 @@ public class JobRequestDefinition {
 
     public int getJobsQueued() {
         return jobsQueued;
+    }
+
+    public String getJobCode() {
+        return jobCode;
+    }
+
+    public String getJobUser() {
+        return jobUser;
     }
 
     public void addJobResult(String result) {

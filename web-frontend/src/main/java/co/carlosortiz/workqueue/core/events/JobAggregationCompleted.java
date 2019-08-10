@@ -1,22 +1,18 @@
 package co.carlosortiz.workqueue.core.events;
 
+import co.carlosortiz.workqueue.core.workqueue.JobResponse;
+
 import java.util.List;
 
 public class JobAggregationCompleted {
-    private String aggregationId;
-    List<String> jobResults;
+    private JobResponse jobResponse;
 
 
-    public JobAggregationCompleted(String aggregationId, List<String> jobResults) {
-        this.aggregationId = aggregationId;
-        this.jobResults = jobResults;
+    public JobAggregationCompleted(JobResponse jobResponse) {
+            this.jobResponse = jobResponse;
     }
 
-    public List<String> getJobResults() {
-        return jobResults;
-    }
-
-    public String getAggregationId() {
-        return aggregationId;
+    public JobResponse getJobResponse() {
+        return jobResponse;
     }
 }

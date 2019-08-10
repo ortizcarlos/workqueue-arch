@@ -26,7 +26,7 @@ public class KWQPublisherImpl implements KWQPublisher {
 
     @Override
     public String submitJob(JobRequest jobRequest) {
-        JobRequestDefinition jobRequestDefinition = new JobRequestDefinition(1);
+        JobRequestDefinition jobRequestDefinition = new JobRequestDefinition(1,jobRequest.getJobCode(),jobRequest.getUser());
         jobResultCoordinator.registerJobCreation(jobRequest.getJobId(), jobRequestDefinition);
         return jobRequest.getJobId();
     }
@@ -43,7 +43,9 @@ public class KWQPublisherImpl implements KWQPublisher {
 
         String aggregationId = UUID.randomUUID().toString();
         int numJobs = jobRequests.size();
-        JobRequestDefinition jobRequestDefinition = new JobRequestDefinition(numJobs);
+        JobRequestDefinition jobRequestDefinition = new JobRequestDefinition(numJobs,
+                jobRequests.get(0).getJobCode(),
+                jobRequests.get(0).getUser());
 
         jobRequests.stream().forEach(jobRequest -> jobRequest.setJobAggregationId(aggregationId));
         jobResultCoordinator.registerJobCreation(aggregationId, jobRequestDefinition);

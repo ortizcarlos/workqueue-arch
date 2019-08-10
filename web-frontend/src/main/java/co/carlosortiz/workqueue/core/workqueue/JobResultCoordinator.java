@@ -23,8 +23,6 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Component
 public class JobResultCoordinator {
-
-
     private static final Logger LOGGER = LoggerFactory.getLogger(JobResultCoordinator.class);
 
     private Map<String, DeferredResult<ResponseEntity<String>>> openWebChannels;
@@ -57,18 +55,22 @@ public class JobResultCoordinator {
         if (jobRequestDefinition!=null) {
             int executions = jobRequestDefinition.incrementAndGetExecutions();
             jobRequestDefinition.addJobResult(jobResponse);
-            LOGGER.info("executions completed " + executions );
+            LOGGER.info("number of executions completed {}" , executions );
 
             if (executions==jobRequestDefinition.getJobsQueued()) {
                 LOGGER.info("Aggregation completed sending local event -> JobAggregationCompleted ");
-                publisher.publishEvent(new JobAggregationCompleted(jobId,jobRequestDefinition.getAggregatedResult()));
+                publisher.publishEvent(
+                                    new JobAggregationCompleted (
+                                            new JobResponse(jobRequestDefinition.getJobCode(),
+                                                    jobId,
+                                                    jobRequestDefinition.getJobUser(),
+                                                    jobRequestDefinition.getAggregatedResult())
+                                    )
+                            );
             }
         } else {
-            LOGGER.info("No JobRequest found for id " + jobId);
+            LOGGER.info("No JobRequest found for id {}" , jobId);
         }
 
     }
-
-
-
 }

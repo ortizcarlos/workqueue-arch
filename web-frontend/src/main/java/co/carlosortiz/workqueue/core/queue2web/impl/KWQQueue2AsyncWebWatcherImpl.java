@@ -1,6 +1,7 @@
 package co.carlosortiz.workqueue.core.queue2web.impl;
 
 import co.carlosortiz.workqueue.core.events.JobAggregationCompleted;
+import co.carlosortiz.workqueue.core.events.WebResponseCompleted;
 import co.carlosortiz.workqueue.core.queue2web.KWQQueue2AsyncWebWatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +22,7 @@ public class KWQQueue2AsyncWebWatcherImpl implements KWQQueue2AsyncWebWatcher {
 
     private Map<String, DeferredResult<ResponseEntity<String>>> openWebChannels;
 
-    public  KWQQueue2AsyncWebWatcherImpl() {
+    public KWQQueue2AsyncWebWatcherImpl() {
         openWebChannels = new ConcurrentHashMap<>();
     }
 
@@ -31,19 +32,21 @@ public class KWQQueue2AsyncWebWatcherImpl implements KWQQueue2AsyncWebWatcher {
     }
 
     @EventListener
-    public void handleJobAggreationCompleted(JobAggregationCompleted jobAggregationCompleted) {
+    public void handleJobAggreationCompleted(WebResponseCompleted webResponseCompleted) {
+        LOGGER.info("Processing event WebResponseCompleted for id {}",
+                webResponseCompleted.getJobResponse().getJobId());
 
-        LOGGER.info("Processing event JobAggregationCompleted for id {}" , jobAggregationCompleted.getAggregationId());
+        DeferredResult<ResponseEntity<String>> deferredResult
+                = openWebChannels.get(webResponseCompleted.getJobResponse().getJobId());
 
-        DeferredResult<ResponseEntity<String>> deferedResult
-                = openWebChannels.get(jobAggregationCompleted.getAggregationId());
-        if (deferedResult != null) {
-            LOGGER.debug("Sending response to the webchannel linked to the job {} " ,
-                    jobAggregationCompleted.getAggregationId());
-            deferedResult.setResult(new ResponseEntity<String>(
-                    jobAggregationCompleted.getJobResults().toString()
-                    , HttpStatus.OK));
-            openWebChannels.remove(jobAggregationCompleted.getAggregationId());
+        if (deferredResult != null) {
+            LOGGER.debug("Sending response to the webchannel linked to the job {} ",
+                    webResponseCompleted.getJobResponse().getJobId());
+
+            deferredResult.setResult(new ResponseEntity<String>(
+                    webResponseCompleted.getWebContent(),
+                    HttpStatus.OK));
+            openWebChannels.remove(webResponseCompleted.getJobResponse().getJobId());
         }
     }
 }
