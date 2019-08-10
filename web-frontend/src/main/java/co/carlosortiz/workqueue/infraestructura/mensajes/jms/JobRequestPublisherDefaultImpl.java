@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.carlosortiz.workqueue.interfaces.reportes.mensajes;
+package co.carlosortiz.workqueue.infraestructura.mensajes.jms;
 
-import co.carlosortiz.workqueue.interfaces.reportes.modelo.Report;
+import co.carlosortiz.workqueue.core.workqueue.JobRequest;
+import co.carlosortiz.workqueue.core.workqueue.JobRequestPublisher;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +17,18 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Component;
 
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.Session;
+
 /**
  *
  * @author Carlos
  */
 @Component
-public class ReportRequestPublisherDefaultImpl implements ReportRequestPublisher {
+public class JobRequestPublisherDefaultImpl implements JobRequestPublisher {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ReportRequestPublisherDefaultImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JobRequestPublisherDefaultImpl.class);
 
     @Autowired
     private JmsTemplate jmsTemplate;
@@ -36,16 +38,16 @@ public class ReportRequestPublisherDefaultImpl implements ReportRequestPublisher
             
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public void publish(final Report report) {
+    public void publish(final JobRequest jobRequest) {
         LOGGER.info("Start sending message...!");
         MessageCreator messageCreator = new MessageCreator() {
             @Override
             public Message createMessage(Session session) throws JMSException {
-                String textMessage = "{\"reportid\": \"" 
-                        + report.getId()+ "\"}";
+                String textMessage = "{\"job-id\": \""
+                        + jobRequest.getJobId()+ "\"}";
                
                 try {
-                    textMessage = objectMapper.writeValueAsString(report);
+                    textMessage = objectMapper.writeValueAsString(jobRequest);
                 } catch (JsonProcessingException ex) {
                     LOGGER.error("Error convirtiendo status del reporte a JSON");
                 }

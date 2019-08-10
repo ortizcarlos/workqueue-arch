@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.carlosortiz.workqueue.interfaces.reportes.mensajes;
+package co.carlosortiz.workqueue.infraestructura.mensajes.jms;
 
-import co.carlosortiz.workqueue.aplicacion.servicios.JobResultCoordinator;
-import co.carlosortiz.workqueue.aplicacion.servicios.ReportResultProcessor;
+import co.carlosortiz.workqueue.core.workqueue.JobResultCoordinator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -14,9 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  *

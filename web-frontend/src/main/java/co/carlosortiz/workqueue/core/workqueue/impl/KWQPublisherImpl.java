@@ -1,8 +1,8 @@
 package co.carlosortiz.workqueue.core.workqueue.impl;
 
-import co.carlosortiz.workqueue.aplicacion.servicios.JobResultCoordinator;
+import co.carlosortiz.workqueue.core.workqueue.JobResultCoordinator;
 import co.carlosortiz.workqueue.core.workqueue.KWQPublisher;
-import co.carlosortiz.workqueue.interfaces.reportes.mensajes.JobRequestPublisher;
+import co.carlosortiz.workqueue.core.workqueue.JobRequestPublisher;
 import co.carlosortiz.workqueue.core.workqueue.JobRequest;
 import co.carlosortiz.workqueue.core.workqueue.JobRequestDefinition;
 import org.springframework.beans.factory.annotation.Autowired;

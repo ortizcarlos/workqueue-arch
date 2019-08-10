@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.carlosortiz.workqueue.interfaces.reportes.mensajes;
+package co.carlosortiz.workqueue.core.workqueue;
 
 import co.carlosortiz.workqueue.core.workqueue.JobRequest;
 

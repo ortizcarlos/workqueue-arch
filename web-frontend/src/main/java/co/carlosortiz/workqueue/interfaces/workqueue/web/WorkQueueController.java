@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.carlosortiz.workqueue.interfaces.reportes.web;
+package co.carlosortiz.workqueue.interfaces.workqueue.web;
 
 import co.carlosortiz.workqueue.core.queue2web.KWQQueue2AsyncWebWatcher;
 import co.carlosortiz.workqueue.core.workqueue.JobRequest;
