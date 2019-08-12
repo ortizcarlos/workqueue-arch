@@ -1,21 +1,17 @@
 package co.carlosortiz.workqueue.workers.units.pipelines;
 
 import co.carlosortiz.workqueue.infraestructura.mensajes.aplicacion.JobCompletionEvent;
-import co.carlosortiz.workqueue.interfaces.reportes.JobExecutionPublisher;
-import co.carlosortiz.workqueue.interfaces.reportes.ReportExecutionPublisher;
-import co.carlosortiz.workqueue.workers.units.job.JobExecution;
-import co.carlosortiz.workqueue.workers.units.job.JobRequest;
+import co.carlosortiz.workqueue.core.JobExecutionPublisher;
+import co.carlosortiz.workqueue.core.job.JobExecution;
+import co.carlosortiz.workqueue.core.job.JobRequest;
 import co.carlosortiz.workqueue.workers.units.processors.HealSupplyScheduleAppointmentJobProcessor;
 import co.carlosortiz.workqueue.workers.units.processors.JobProcessor;
-import co.carlosortiz.workqueue.workers.units.reportes.impl.ReportProcessorImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.Callable;
 
 @Component
 public class HealthSupplyScheduleAppointmentPipeline implements JobPipeline<String> {

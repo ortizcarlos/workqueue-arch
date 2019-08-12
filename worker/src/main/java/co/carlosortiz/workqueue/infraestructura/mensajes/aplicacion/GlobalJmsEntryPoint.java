@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.carlosortiz.workqueue.interfaces.reportes;
+package co.carlosortiz.workqueue.infraestructura.mensajes.aplicacion;
 
-import co.carlosortiz.workqueue.workers.units.job.GlobalJobController;
-import co.carlosortiz.workqueue.workers.units.reportes.ReportProcessor;
+import co.carlosortiz.workqueue.core.job.GlobalJobController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +17,10 @@ import org.springframework.stereotype.Component;
  * @author Carlos
  */
 @Component
-public class ReportQueueListener {
+public class GlobalJmsEntryPoint {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ReportQueueListener.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GlobalJmsEntryPoint.class);
     @Autowired
-    //private ReportProcessor reportProcessor;
     private GlobalJobController globalJobController;
 
     @JmsListener(destination = "${work.queue.input}",

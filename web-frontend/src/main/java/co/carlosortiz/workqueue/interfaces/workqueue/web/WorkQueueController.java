@@ -39,7 +39,6 @@ public class WorkQueueController {
     @RequestMapping( method = RequestMethod.GET)
     public DeferredResult<ResponseEntity<String>> create() {
         DeferredResult<ResponseEntity<String>> deferredResult = new DeferredResult();
-
         JobRequest jobRequest =
                 JobRequest
                         .builder()
@@ -47,7 +46,6 @@ public class WorkQueueController {
                         .user("cortiz")
                         .addJobParam("ips","camino")
                         .create();
-
         JobRequest jobRequest2 =
                 JobRequest
                         .builder()
@@ -55,7 +53,6 @@ public class WorkQueueController {
                         .user("cortiz")
                         .addJobParam("ips","ips2")
                         .create();
-
         JobRequest jobRequest3 =
                 JobRequest
                         .builder()
@@ -63,17 +60,13 @@ public class WorkQueueController {
                         .user("cortiz")
                         .addJobParam("ips","ips3")
                         .create();
-
         List<JobRequest> jobRequests = new ArrayList<>();
         jobRequests.add(jobRequest);
         jobRequests.add(jobRequest2);
         jobRequests.add(jobRequest3);
-
         String aggregationId = kwqPublisher.submitJobAggregation(jobRequests);
         kwqQueue2AsyncWebWatcher.registerAsyncWebWatch(aggregationId,deferredResult);
-
         return deferredResult;
     }
-
 
 }

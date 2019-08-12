@@ -1,6 +1,5 @@
-package co.carlosortiz.workqueue.workers.units.job;
+package co.carlosortiz.workqueue.core.job;
 
-import co.carlosortiz.workqueue.workers.units.pipelines.HealthSupplyScheduleAppointmentPipeline;
 import co.carlosortiz.workqueue.workers.units.pipelines.JobPipeline;
 
 import org.slf4j.Logger;

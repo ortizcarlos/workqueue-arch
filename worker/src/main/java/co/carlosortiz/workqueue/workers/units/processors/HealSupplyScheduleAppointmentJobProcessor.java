@@ -1,6 +1,6 @@
 package co.carlosortiz.workqueue.workers.units.processors;
 
-import co.carlosortiz.workqueue.workers.units.job.JobExecutorInstanceBuilder;
+import co.carlosortiz.workqueue.core.job.JobExecutorInstanceBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +28,7 @@ public class HealSupplyScheduleAppointmentJobProcessor implements JobProcessor<S
         LOGGER.debug("IPS: " + ips);
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(5000);
         } catch (InterruptedException ie) {
         }
 

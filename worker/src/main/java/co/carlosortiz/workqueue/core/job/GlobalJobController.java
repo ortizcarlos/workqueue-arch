@@ -1,8 +1,7 @@
-package co.carlosortiz.workqueue.workers.units.job;
+package co.carlosortiz.workqueue.core.job;
 
 import co.carlosortiz.workqueue.workers.units.pipelines.JobPipeline;
 import co.carlosortiz.workqueue.workers.units.processors.JobProcessor;
-import co.carlosortiz.workqueue.workers.units.reportes.impl.ReportProcessorImpl;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;

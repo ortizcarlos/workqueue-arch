@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.carlosortiz.workqueue.interfaces.reportes;
+package co.carlosortiz.workqueue.core;
 
 import co.carlosortiz.workqueue.infraestructura.mensajes.aplicacion.JobCompletionEvent;
-import co.carlosortiz.workqueue.infraestructura.mensajes.aplicacion.ReportProcessedEvent;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;

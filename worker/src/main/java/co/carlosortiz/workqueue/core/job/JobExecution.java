@@ -1,6 +1,4 @@
-package co.carlosortiz.workqueue.workers.units.job;
-
-import co.carlosortiz.workqueue.workers.units.pipelines.JobPipeline;
+package co.carlosortiz.workqueue.core.job;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;

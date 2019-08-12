@@ -40,7 +40,8 @@ public class ApplicationEventDispatcher {
             LOGGER.info("dispatching appointment-schedule");
 
             publisher.publishEvent(new HealthSupplyScheduleAppointmentReceived(
-                                                        jobAggregationCompleted.getJobResponse()));
+                                                        jobAggregationCompleted
+                                                                .getJobResponse()));
 
         }
     }

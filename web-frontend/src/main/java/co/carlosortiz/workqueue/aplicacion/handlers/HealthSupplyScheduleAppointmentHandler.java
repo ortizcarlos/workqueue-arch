@@ -19,6 +19,7 @@ public class HealthSupplyScheduleAppointmentHandler {
 
     @Autowired
     public HealthSupplyScheduleAppointmentHandler(ApplicationEventPublisher publisher) {
+
         this.publisher = publisher;
     }
 
@@ -26,9 +27,14 @@ public class HealthSupplyScheduleAppointmentHandler {
     public void handleApplicationEvent(HealthSupplyScheduleAppointmentReceived healthSupplyScheduleAppointmentReceived) {
         LOGGER.info("Starting Handling of HealthSupplyScheduleAppointmentReceived");
         //se hacen las transformaciones necesarias y se genera la respuesta al cliente
-        publisher.publishEvent(new WebResponseCompleted(
-                healthSupplyScheduleAppointmentReceived.getJobResponse(),
-                healthSupplyScheduleAppointmentReceived.getJobResponse().getAggregatedResult().toString()));
+        publisher.publishEvent(new WebResponseCompleted (
+                    healthSupplyScheduleAppointmentReceived
+                        .getJobResponse(),
+                    healthSupplyScheduleAppointmentReceived
+                        .getJobResponse()
+                        .getAggregatedResult()
+                        .toString())
+        );
 
     }
 

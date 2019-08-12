@@ -1,4 +1,4 @@
-package co.carlosortiz.workqueue.workers.units.job;
+package co.carlosortiz.workqueue.core.job;
 
 import java.util.Map;
 

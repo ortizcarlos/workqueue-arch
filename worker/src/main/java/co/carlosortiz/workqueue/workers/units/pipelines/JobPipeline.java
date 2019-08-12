@@ -1,9 +1,7 @@
 package co.carlosortiz.workqueue.workers.units.pipelines;
 
-import co.carlosortiz.workqueue.workers.units.job.JobExecution;
+import co.carlosortiz.workqueue.core.job.JobExecution;
 import co.carlosortiz.workqueue.workers.units.processors.JobProcessor;
-
-import java.util.concurrent.Callable;
 
 public interface JobPipeline<T> {
 
