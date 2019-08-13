@@ -51,7 +51,8 @@ public class WorkQueueController {
                         .builder()
                         .jobCode("appointment-schedule")
                         .user("cortiz")
-                        .addJobParam("ips","ips2")
+                        .addJobParam("ips","sura")
+                        .addJobParam("body","json")
                         .create();
         JobRequest jobRequest3 =
                 JobRequest
@@ -59,11 +60,23 @@ public class WorkQueueController {
                         .jobCode("appointment-schedule")
                         .user("cortiz")
                         .addJobParam("ips","ips3")
+                        .addJobParam("request-date","2019-08-25")
                         .create();
+
+        JobRequest jobRequest4 =
+                JobRequest
+                        .builder()
+                        .jobCode("appointment-schedule")
+                        .user("cortiz")
+                        .addJobParam("ips","coosalud")
+                        .addJobParam("request-date","2019-08-25")
+                        .create();
+
         List<JobRequest> jobRequests = new ArrayList<>();
         jobRequests.add(jobRequest);
         jobRequests.add(jobRequest2);
         jobRequests.add(jobRequest3);
+        jobRequests.add(jobRequest4);
         String aggregationId = kwqPublisher.submitJobAggregation(jobRequests);
         kwqQueue2AsyncWebWatcher.registerAsyncWebWatch(aggregationId,deferredResult);
         return deferredResult;

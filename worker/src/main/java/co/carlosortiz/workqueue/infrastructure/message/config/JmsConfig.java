@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.carlosortiz.workqueue.infraestructura.mensajes.jms.config;
+package co.carlosortiz.workqueue.infrastructure.message.config;
 
 import javax.jms.ConnectionFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,7 +34,9 @@ public class JmsConfig {
         ccf.setSessionCacheSize(jmsCacheSize);
 
         DefaultJmsListenerContainerFactory dmlc = new DefaultJmsListenerContainerFactory();
-        dmlc.setConnectionFactory(ccf);        
+        dmlc.setConnectionFactory(ccf);
+        System.out.println("ACTIVMQ STARTED");
+        
         return dmlc;
     }
 }

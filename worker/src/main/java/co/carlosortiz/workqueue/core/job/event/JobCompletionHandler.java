@@ -1,5 +1,6 @@
-package co.carlosortiz.workqueue.core.job;
+package co.carlosortiz.workqueue.core.job.event;
 
+import co.carlosortiz.workqueue.core.job.JobExecution;
 import co.carlosortiz.workqueue.workers.units.pipelines.JobPipeline;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +14,7 @@ public class JobCompletionHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JobCompletionHandler.class);
 
-    private ConcurrentHashMap<JobExecution , JobPipeline > jobsInExecutions;
+    private ConcurrentHashMap<JobExecution, JobPipeline > jobsInExecutions;
     private boolean keepRunning;
 
     private ExecutorService executionService;

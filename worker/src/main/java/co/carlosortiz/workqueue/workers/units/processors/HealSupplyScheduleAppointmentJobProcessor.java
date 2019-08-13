@@ -23,6 +23,10 @@ public class HealSupplyScheduleAppointmentJobProcessor implements JobProcessor<S
     public String call() {
 
         String ips = params.get("ips");
+        String body = params.get("body");
+
+        //obtiene
+
         String requestDate = params.get("requested-appointment-date");
 
         LOGGER.debug("IPS: " + ips);

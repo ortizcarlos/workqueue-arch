@@ -1,5 +1,6 @@
 package co.carlosortiz.workqueue.core.job;
 
+import co.carlosortiz.workqueue.core.scheduler.WorkScheduler;
 import co.carlosortiz.workqueue.workers.units.pipelines.JobPipeline;
 import co.carlosortiz.workqueue.workers.units.processors.JobProcessor;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -19,30 +20,21 @@ import java.util.concurrent.Future;
 
 @Component
 public class GlobalJobController {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalJobController.class);
-
-    private ExecutorService jobExecutorService;
-
-    @Autowired
-    private JobCompletionHandler jobCompletionHandler;
-
-    private static final int MAXTHREADS = 5;
-
-    private int maxthreads = MAXTHREADS;
+    private WorkScheduler workScheduler;
 
     @Autowired
     private JobExecutorInstanceBuilder jobExecutorInstanceBuilder;
 
-
-    GlobalJobController(){
-        jobExecutorService = Executors.newFixedThreadPool(maxthreads);
+    @Autowired
+    GlobalJobController(WorkScheduler workScheduler){
+        this.workScheduler = workScheduler;
     }
 
     /*
          {
-            "job-id": "7b51aa48-36a9-4c07-adbb-bf68f1c7bc97",
-            "job-code": "appointment-schedule",
+            "jobId": "7b51aa48-36a9-4c07-adbb-bf68f1c7bc97",
+            "jobCode": "appointment-schedule",
             "user": "jhondoe",
             "timestamp" : "",
             "job-params": [
@@ -65,8 +57,7 @@ public class GlobalJobController {
 
        JobProcessor jobProcessor = jobPipeline.getProcessor();
        jobProcessor.setParams(jobRequest.getJobParams());
-       Future<Callable> completion =  jobExecutorService.submit(jobProcessor);
-       jobCompletionHandler.submitJobCompletion(new JobExecution(completion,jobRequest,System.currentTimeMillis()),jobPipeline);
+       workScheduler.submitJob(jobPipeline,jobProcessor,jobRequest);
     }
 
     private JobRequest createJobRequest(String rawJobMsg) {

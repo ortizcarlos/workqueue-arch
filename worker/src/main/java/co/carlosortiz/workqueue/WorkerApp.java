@@ -5,7 +5,7 @@
  */
 package co.carlosortiz.workqueue;
 
-import co.carlosortiz.workqueue.infraestructura.mensajes.jms.config.JmsConfig;
+import co.carlosortiz.workqueue.infrastructure.message.config.JmsConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;

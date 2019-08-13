@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.carlosortiz.workqueue.core;
+package co.carlosortiz.workqueue.core.job.event;
 
-import co.carlosortiz.workqueue.infraestructura.mensajes.aplicacion.JobCompletionEvent;
+import co.carlosortiz.workqueue.core.job.event.JobCompletionEvent;
 
 /**
  *
  * @author Carlos
  */
-public interface JobExecutionPublisher {
+public interface JobCompletionPublisher {
   void publish(final JobCompletionEvent jobCompletionEvent);
 }

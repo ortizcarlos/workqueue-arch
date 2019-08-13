@@ -1,4 +1,4 @@
-package co.carlosortiz.workqueue.infraestructura.mensajes.aplicacion;
+package co.carlosortiz.workqueue.core.job.event;
 
 import java.util.Map;
 

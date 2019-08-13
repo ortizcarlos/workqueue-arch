@@ -1,7 +1,7 @@
 package co.carlosortiz.workqueue.workers.units.pipelines;
 
-import co.carlosortiz.workqueue.infraestructura.mensajes.aplicacion.JobCompletionEvent;
-import co.carlosortiz.workqueue.core.JobExecutionPublisher;
+import co.carlosortiz.workqueue.core.job.event.JobCompletionEvent;
+import co.carlosortiz.workqueue.core.job.event.JobCompletionPublisher;
 import co.carlosortiz.workqueue.core.job.JobExecution;
 import co.carlosortiz.workqueue.core.job.JobRequest;
 import co.carlosortiz.workqueue.workers.units.processors.HealSupplyScheduleAppointmentJobProcessor;
@@ -20,7 +20,7 @@ public class HealthSupplyScheduleAppointmentPipeline implements JobPipeline<Stri
 
 
     @Autowired
-    private JobExecutionPublisher jobExecutionPublisher;
+    private JobCompletionPublisher jobExecutionPublisher;
 
     @Override
     public JobProcessor getProcessor() {

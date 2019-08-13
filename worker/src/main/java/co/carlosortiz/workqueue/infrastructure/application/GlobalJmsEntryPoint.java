@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.carlosortiz.workqueue.infraestructura.mensajes.aplicacion;
+package co.carlosortiz.workqueue.infrastructure.application;
 
 import co.carlosortiz.workqueue.core.job.GlobalJobController;
 import org.slf4j.Logger;

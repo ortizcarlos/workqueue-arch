@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.carlosortiz.workqueue.core;
+package co.carlosortiz.workqueue.core.job.event;
 
-import co.carlosortiz.workqueue.infraestructura.mensajes.aplicacion.JobCompletionEvent;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -25,9 +24,9 @@ import javax.jms.Session;
  * @author Carlos
  */
 @Component
-public class JobExecutionPublisherDefaultImpl implements JobExecutionPublisher {
+public class JobCompletionPublisherDefaultImpl implements JobCompletionPublisher {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JobExecutionPublisherDefaultImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JobCompletionPublisherDefaultImpl.class);
 
     @Autowired
     private JmsTemplate jmsTemplate;
