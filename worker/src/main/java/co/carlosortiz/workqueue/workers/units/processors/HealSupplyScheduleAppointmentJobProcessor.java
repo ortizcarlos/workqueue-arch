@@ -26,10 +26,21 @@ public class HealSupplyScheduleAppointmentJobProcessor implements JobProcessor<S
         String requestDate = params.get("requested-appointment-date");
         LOGGER.debug("IPS: " + ips);
 
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException ie) {
+        if ("sura".equals(ips)) {
+
+            try {
+                Thread.sleep(15000);
+            } catch (InterruptedException ie) {
+            }
+
+        } else {
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ie) {
+            }
         }
+
 
         String response = "{\"appointment\": {\n" +
                 "  \"jobid\": \" " + System.currentTimeMillis() + ",\n" +

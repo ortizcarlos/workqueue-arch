@@ -48,7 +48,7 @@ public class JobResultCoordinator {
     }
 
 
-    public void processJobCompleted(String jobId, String jobResponse) {
+    public void processJobCompleted(String jobId,String jobStatus, String jobResponse) {
         LOGGER.info("processing result for JobID {}" , jobId);
         JobRequestDefinition jobRequestDefinition = jobsInProgress.get(jobId);
 

@@ -24,6 +24,7 @@ public class JobCompletionEvent {
     public static JobCompletionEvent  newFailureCompletionEvent(String jobId, String user, String jobCode,String statusMsg) {
         JobCompletionEvent jobCompletionEvent = new JobCompletionEvent(jobId,user,jobCode,new HashMap<String,String>());
         jobCompletionEvent.status = "Error";
+        jobCompletionEvent.statusMsg =statusMsg;
         return jobCompletionEvent;
     }
 
@@ -38,6 +39,14 @@ public class JobCompletionEvent {
 
     public String getUser() {
         return user;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getStatusMsg() {
+        return statusMsg;
     }
 
     public Map<String, String> getResponseMap() {

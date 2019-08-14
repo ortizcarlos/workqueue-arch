@@ -37,7 +37,7 @@ public class HealthSupplyScheduleAppointmentPipeline extends AbstractJobPipeline
 
     @Override
     public long getMaxExecutionMillis() {
-        return 15000;
+        return 10000;
     }
 
     @Override

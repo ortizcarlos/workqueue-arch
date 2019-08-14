@@ -39,13 +39,17 @@ public class WorkQueueOutputListener {
             String jobId = root.path("jobId").asText();
             String jobCode = root.path("jobCode").asText();
             String user = root.path("user").asText();
+            String jobStatus = root.path("status").asText();
+            String jobStatusMsg =  root.path("statusMsg").asText();
             String result = getResponse(root.path("responseMap"));
 
             LOGGER.info("job-code: [{}]", jobCode);
             LOGGER.info("job-id: [{}]", jobId);
+            LOGGER.info("job-status: [{}]", jobStatus);
+            LOGGER.info("job-statusMsg: [{}]", jobStatusMsg);
             LOGGER.info("job-response: [{}]", result);
             
-            this.jobResultCoordinator.processJobCompleted (jobId, result);
+            this.jobResultCoordinator.processJobCompleted (jobId, jobStatus, result);
         } catch (Exception e) {
             LOGGER.error("Ocurrio un error procesando resultado" , e);
         }
