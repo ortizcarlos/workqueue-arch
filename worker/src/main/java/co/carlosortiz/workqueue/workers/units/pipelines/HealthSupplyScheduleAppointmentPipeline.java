@@ -14,13 +14,9 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 
 @Component
-public class HealthSupplyScheduleAppointmentPipeline implements JobPipeline<String> {
+public class HealthSupplyScheduleAppointmentPipeline extends AbstractJobPipeline<String> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HealthSupplyScheduleAppointmentPipeline.class);
-
-
-    @Autowired
-    private JobCompletionPublisher jobExecutionPublisher;
 
     @Override
     public JobProcessor getProcessor() {
@@ -32,20 +28,20 @@ public class HealthSupplyScheduleAppointmentPipeline implements JobPipeline<Stri
     }
 
     @Override
-    public void processPipeline(JobExecution jobExecution, Object  result) {
+    public HashMap<String,String> runPipeline(Object  result) {
         String jobResult = (String) result;
-        JobRequest jobRequest = jobExecution.getJobRequest();
-
         HashMap<String,String> resultMap = new HashMap<>();
         resultMap.put("result",jobResult);
-
-        JobCompletionEvent jobCompletionEvent = new JobCompletionEvent( jobRequest.getJobId(),
-                jobRequest.getUser(),jobRequest.getJobCode(),resultMap);
-        jobExecutionPublisher.publish(jobCompletionEvent);
+        return resultMap;
     }
 
     @Override
     public long getMaxExecutionMillis() {
         return 15000;
+    }
+
+    @Override
+    public String onTimeout(JobExecution jobExecution) {
+        return "{status:\"Error\", cause:\"timeout\"}";
     }
 }

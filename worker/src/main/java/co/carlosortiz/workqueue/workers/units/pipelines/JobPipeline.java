@@ -12,4 +12,6 @@ public interface JobPipeline<T> {
     public void processPipeline(JobExecution jobExecution,Object  result);
 
     public long getMaxExecutionMillis();
+
+    public void handleTimeout(JobExecution jobExecution);
 }

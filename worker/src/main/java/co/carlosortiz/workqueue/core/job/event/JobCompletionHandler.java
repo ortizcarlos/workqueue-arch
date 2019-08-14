@@ -14,7 +14,7 @@ public class JobCompletionHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JobCompletionHandler.class);
 
-    private ConcurrentHashMap<JobExecution, JobPipeline > jobsInExecutions;
+    private ConcurrentHashMap<JobExecution, JobPipeline> jobsInExecutions;
     private boolean keepRunning;
 
     private ExecutorService executionService;
@@ -36,12 +36,12 @@ public class JobCompletionHandler {
     }
 
     public void submitJobCompletion(JobExecution jobExecution, JobPipeline pipeline) {
-        jobsInExecutions.put(jobExecution,pipeline);
+        jobsInExecutions.put(jobExecution, pipeline);
     }
 
     private void runWatchTask() throws InterruptedException {
-        while(keepRunning) {
-            for (Map.Entry<JobExecution, JobPipeline > entry : jobsInExecutions.entrySet()) {
+        while (keepRunning) {
+            for (Map.Entry<JobExecution, JobPipeline> entry : jobsInExecutions.entrySet()) {
 
                 JobExecution jobExecution = entry.getKey();
                 JobPipeline jobPipeline = entry.getValue();
@@ -50,22 +50,28 @@ public class JobCompletionHandler {
                 if (future.isDone()) {
                     jobsInExecutions.remove(entry.getKey());
                     try {
-                        jobPipeline.processPipeline(jobExecution,future.get());
+                        jobPipeline.processPipeline(jobExecution, future.get());
                     } catch (ExecutionException ee) {
                         //TODO better exception handling
                         LOGGER.error(ee.getMessage());
                     }
-                } else if (isTimedOut(entry.getKey(),jobPipeline.getMaxExecutionMillis())) {
+                } else if (isTimedOut(entry.getKey(), jobPipeline.getMaxExecutionMillis())) {
                     //handle timeout
-                    future.cancel(true);
+                    jobsInExecutions.remove(entry.getKey());
+                    try {
+                        future.cancel(true);
+                    } catch (Exception ie) {
+
+                    }
+                    jobPipeline.handleTimeout(jobExecution);
                 }
             }
             Thread.sleep(100);
         }
     }
 
-    private boolean isTimedOut(JobExecution jobExecution,long maxMillis) {
-        return (System.currentTimeMillis() - jobExecution.getStartmillis()> maxMillis );
+    private boolean isTimedOut(JobExecution jobExecution, long maxMillis) {
+        return (System.currentTimeMillis() - jobExecution.getStartmillis() > maxMillis);
     }
 
 }
